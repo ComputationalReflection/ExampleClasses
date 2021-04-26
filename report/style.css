@@ -1,0 +1,210 @@
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar {
+  fill: orange;
+}
+
+.solidArc:hover {
+  fill: orangered;
+}
+
+.solidArc {
+  -moz-transition: all 0.3s;
+  -o-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.aster-score {
+  line-height: 1;
+  font-weight: bold;
+  font-size: 500%;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+  text-align: center;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}
+
+.container {  
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "chart legend chart2 legend2"
+}
+#chart2 {
+    grid-area: chart2;
+    text-align: center;
+}
+
+#chart {
+  grid-area: chart;
+  text-align: center;
+}
+
+#legend {
+  grid-area: legend;
+}
+#legend2 {
+    grid-area: legend2;
+}
+
+#legend svg, #legend2 svg {
+  width: 100%;
+  height: 100%;
+}
+
+.tree li ul > li {
+    display: none;
+}
+
+
+#header{
+	width: 100%;	
+	margin-bottom: 20px;
+}
+
+#footer{
+	clear:both;
+	width: 100%;	
+	margin-bottom: 20px;
+	text-align: center;
+}
+
+h1{
+	
+	display: inline-block;
+	padding-top: 20px;	
+	margin-bottom: 0px !important;
+	font-family: Verdana, Geneva, sans-serif; 
+}
+
+#logo{
+	padding-right: 10px;
+	float: left;
+}
+
+#report, #warnings, #summary, #rules{
+  margin-left: 25px;
+  margin-bottom: 25px;;
+}
+.report_table
+{
+  margin-left: 25px;
+}
+
+.report_table_title
+{
+  width: 150px;
+}
+
+.report_table_rule_category{
+	width: 200px;
+}
+
+.report_table_rule_name{
+    width: auto;
+    padding-right: 10px;
+}
+
+.report_table tr, #summary_table tr{
+  border-bottom: 1px dashed grey;  
+}
+
+.report_table th{
+  text-align: left;
+}
+
+.report_table_rule_analysis{
+    text-align: right ;
+    width: 200px;
+}
+
+th.report_table_rule_analysis{
+    text-align: right !important;
+}
+
+.container{	
+ margin: 25px;
+}
+
+#summary {
+    text-align: center;
+    width: 1400px;
+}
+
+#charts {
+    text-align: left;
+    padding-left: 20px;
+}
+
+#chart_syntactic_construct, #chart_category{
+    display: inline-block;
+}
+
+#chart_category{
+    margin-right: 50px;
+}
+
+.container{
+    width: auto !important;
+    float: left;
+}
+
+#legend,#legend2{
+    width: 240px !important;
+}
+
+#rules{
+	 display: inline-block;
+}
+
+#summary_table{  
+  display: inline-block;
+}
+
+.tree{
+	max-height: none !important;
+}
+
+.source_file{
+margin-left: 5px;
+}

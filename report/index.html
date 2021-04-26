@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="http://jhfrench.github.io/bootstrap-tree/bootstrap-combined.min.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
+	<script src="http://jhfrench.github.io/bootstrap-tree/js/bootstrap-tree.js"></script>
+	<script src="data.js" ></script>
+</head>
+
+<body>
+<div id="header">
+	<img id="logo" src="logo.png"></img> 
+	<h1>Static Code Analysis Tool</h1><br/>
+	<span id="powered">powered by <a href="http://www.reflection.uniovi.es/"><em>Computational Reflection Research Group</em></a></span>	
+</div>
+
+<div id="report">
+    <h3>Analysis Report</h3>
+    <table class="report_table">
+        <tbody>
+            <tr>
+                <td class="report_table_title">User</td>
+                <td id="html_user"></td>
+            </tr>
+            <tr>
+                <td class="report_table_title">Project</td>
+                <td id="html_program"></td>
+            </tr>
+            <tr>
+                <td class="report_table_title">Location</td>                
+				<td id="html_location"></td>
+            </tr>
+            <tr>
+                <td class="report_table_title">Analysis Date</td>
+                <td id="html_date"></td>
+            </tr>
+            <tr>
+                <td class="report_table_title">Size</td>
+                <td id="html_size"></td>
+            </tr>
+			<tr>
+                <td class="report_table_title">Build Time</td>
+                <td id="html_build_time"></td>
+            </tr>
+			<tr>
+                <td class="report_table_title">Analysis Elapsed Time</td>
+                <td id="html_elapsed_time"></td>
+            </tr>
+        </tbody>
+    </table>	
+</div>
+
+
+<div id="charts">
+   <div id="chart_category">
+        <h4>Analysis by Category</h4>
+         <div class="container">
+            <div id="legend"></div>
+            <div id="chart"></div>
+          </div>
+    </div>
+    <div id="chart_syntactic_construct">
+        <h4>Analysis by Syntactic Construct</h4>
+        <div class="container">
+            <div id="legend2"></div>
+            <div id="chart2"></div>
+        </div>
+    </div>
+    <div id="summary">
+        <table id="summary_table">
+            <thead>
+            <tr>
+                <th> </th>
+                <th>Total</th>
+                <th>No Warnings</th>
+                <th>Warnings</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td class="report_table_title">Number of Analysis Executions</td>
+                <td class="report_table_title" id="html_total"></td>
+                <td class="report_table_title" id="html_valid"></td>
+                <td class="report_table_title" id="html_invalid"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>  
+<script src="draw.js"></script>
+<script src="draw2.js"></script>
+
+<div id="rules">
+    <h4>Rules used for analysis</h4>
+    <table class="report_table">
+        <thead>
+        <tr>
+            <th>Rule ID</th>
+            <th>Name</th>
+            <th>Category</th>
+            <th>Syntactic Construct</th>
+            <th class="report_table_rule_analysis">Compliance</th>
+        </tr>
+        </thead>
+        <tbody id="html_rules">
+        </tbody>
+    </table>
+</div>
+
+<div id="warnings">
+  <h4 id="overview_warnings">Warnings Overview</h4>
+  <div class="tree well">
+    <ul id="html_warnings">
+        
+    </ul>
+</div>
+</div>
+
+<script>
+    document.getElementById("html_user").innerHTML = report.user;
+	document.getElementById("html_program").innerHTML = report.program;
+	document.getElementById("html_location").innerHTML = report.location;
+	document.getElementById("html_date").innerHTML = report.date;
+    document.getElementById("html_size").innerHTML = report.size + ' nodes';
+	document.getElementById("html_build_time").innerHTML = report.build_time + ' seconds';
+	document.getElementById("html_elapsed_time").innerHTML = report.elapsed_time + ' seconds';
+	document.getElementById("html_total").innerHTML = report.total_checked;
+	document.getElementById("html_valid").innerHTML = report.total_valid + ' (' + report.percentage_valid + '%)';
+	document.getElementById("html_invalid").innerHTML = report.total_invalid + ' (' + report.percentage_invalid + '%)';
+	document.getElementById("overview_warnings").innerHTML += ' (' + report.total_invalid + ')';
+	
+	var html_rules = document.getElementById("html_rules");
+	var inner_html_rules = '';  
+	report.rules.forEach(function (r) { 
+		inner_html_rules += '<tr>';
+		inner_html_rules += '<td class="report_table_title"><strong>' + r.rule_id + '</strong></td>';
+		inner_html_rules += '<td class="report_table_title report_table_rule_name"><a title="' + r.rule_name + '" href="rules.html#' + r.rule_id + '">' + r.rule_name + '</a></td>';
+		inner_html_rules += '<td class="report_table_title report_table_rule_category">' + r.rule_category + '</td>';
+		inner_html_rules += '<td class="report_table_title">' + r.rule_syntactic_construct + '</td>';
+		inner_html_rules += '<td class="report_table_title report_table_rule_analysis">' + r.rule_analysis + '</td>';
+		inner_html_rules += '</tr>';
+	});	
+	html_rules.innerHTML = inner_html_rules;
+
+	var html_warnings = document.getElementById("html_warnings");
+	var inner_html_warnings = '';  
+	report.warnings.forEach(function (w) { 
+		inner_html_warnings += '<li>';
+		inner_html_warnings += '<span><i class="icon-tag"></i> ' + w.category + ' (' + w.count + ')</span><ul>';
+		w.rules.forEach(function (r) {
+			inner_html_warnings += '<li><span class="badge badge-warning"><i class="icon-plus-sign"></i>' + r.rule + '</span> <strong><a href="rules.html#' + r.rule + '">' + r.rule_name + '</a></strong><ul>';
+			r.nodes.forEach(function (n) {
+                inner_html_warnings += '<li><span><i class="icon-plus-sign"></i>' + n.location +  ':' + n.line + '</span><a class="glyphicon glyphicon-new-window source_file" title="Show source file" target="_blank"  href="file:///' + n.location + '"></a><ul>';
+                /*inner_html_warnings += '<li><span><i class="icon-question-sign"></i></span> ' + n.node + '</li>';*/
+				inner_html_warnings += '<li><span><i class="icon-question-sign"></i></span> ' + n.message + '</li></ul>';
+                inner_html_warnings += '</li>';
+			});		
+			inner_html_warnings += '</ul></li>';			
+		});	
+		inner_html_warnings += '</ul></li>';
+	});	
+	html_warnings.innerHTML = inner_html_warnings;
+</script>
+
+<div id="footer">
+	<a href="http://www.reflection.uniovi.es/">Computational Reflection Research Group</a>, University of Oviedo <br/> 2020	
+</div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+projectKey=ExampleClasses
+serverUrl=http://156.35.94.140:9000
+serverVersion=8.8.0.42792
+dashboardUrl=http://156.35.94.140:9000/dashboard?id=ExampleClasses
+ceTaskId=AXj9xHaUczlJuMoVg4kW
+ceTaskUrl=http://156.35.94.140:9000/api/ce/task?id=AXj9xHaUczlJuMoVg4kW

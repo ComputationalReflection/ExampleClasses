@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="http://jhfrench.github.io/bootstrap-tree/bootstrap-combined.min.css">
+	<script src="rules.js" ></script>
+</head>
+
+<body>
+<div id="header">
+	<img id="logo" src="logo.png"></img> 
+	<h1>Static Code Analysis Tool</h1><br/>
+	<span id="powered">powered by <a href="http://www.reflection.uniovi.es/"><em>Computational Reflection Research Group</em></a></span>	
+</div>
+
+<div id="rules">
+    <h3>Rules</h3>
+    <div id="html_rules">
+		
+	</div>
+</div>
+
+<script>		
+	var html_rules = document.getElementById("html_rules");
+	var inner_html_rules = '';  
+	rules.forEach(function (r) { 
+		inner_html_rules += '<h4 id="' + r.rule_id + '">' + r.rule_id + ': ' + r.rule_name + '</h4><dl>';
+		inner_html_rules += '<dt>Category</dt>' + r.rule_category + '<dd></dd>';    
+		inner_html_rules += '<dt>Syntactic Construct</dt>' + r.rule_syntactic_construct + '<dd></dd>';    
+		inner_html_rules += '<dt>Description</dt>' + r.rule_description + '<dd></dd>';    
+		inner_html_rules += '</dl>';
+	});	
+	html_rules.innerHTML = inner_html_rules;
+</script>
+
+
+<div id="footer">
+	<a href="http://www.reflection.uniovi.es/">Computational Reflection Research Group</a>, University of Oviedo <br/> 2020	
+</div>
+</body>
+</html>
